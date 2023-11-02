@@ -1,7 +1,7 @@
 from torchvision import models as models
 import torch.nn as nn
 def model(pretrained, requires_grad):
-    model = models.resnet50(progress=True, pretrained=pretrained)
+    model = models.resnet152(progress=True, pretrained=pretrained)
     # to freeze the hidden layers
     if requires_grad == False:
         for param in model.parameters():

@@ -13,14 +13,14 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = models.model(pretrained=False, requires_grad=False).to(device)
 
 # Load the model checkpoint
-checkpoint = torch.load('C:/Users/Karti/Desktop/drive/outputs/model.pth')
+checkpoint = torch.load('outputs/model.pth')
 
 # Load model weights state_dict
 model.load_state_dict(checkpoint['model_state_dict'])
 model.eval()
 
 # Load the CSV file containing genre information
-train_csv = pd.read_csv('C:/Users/Karti/Desktop/drive/Multi_Label_dataset/train.csv')
+train_csv = pd.read_csv('Multi_Label_dataset/train.csv')
 genres = train_csv.columns.values[2:]
 
 # Define a transform to preprocess the input image
@@ -30,7 +30,7 @@ transform = transforms.Compose([
 ])
 
 # Load a single input image
-image_path = 'C:/Users/Karti/Desktop/drive/irmn3.jpg'  # Replace with the path to your input image
+image_path = 'irmn3.jpg'  # Replace with the path to your input image
 input_image = Image.open(image_path).convert('RGB')
 input_image = transform(input_image).unsqueeze(0).to(device)
 

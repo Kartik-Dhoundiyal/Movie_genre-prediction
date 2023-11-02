@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 from engine import train, validate
 from dataset import ImageDataset
 from torch.utils.data import DataLoader
-from models import model_with_attention  # Import your custom model function
+from models import model 
+from att_model import AttentionModel# Import your custom model function
 
 # Initialize the computation device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -15,7 +16,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 pretrained = True
 requires_grad = False  # Set to True if you want to fine-tune the model
 num_attention_heads = 8  # Adjust this number based on your needs
-model = model_with_attention(pretrained, requires_grad, num_attention_heads).to(device)
+model = model(pretrained, requires_grad).to(device)
+# model = AttentionModel(pretrained, requires_grad).to(device)
 
 # Learning parameters
 lr = 0.0001
@@ -25,8 +27,8 @@ optimizer = optim.Adam(model.parameters(), lr=lr)
 criterion = nn.BCELoss()
 
 # Read the training csv file and validation csv file
-train_csv = pd.read_csv('C:/Users/Karti/Desktop/drive/Multi_Label_dataset/train.csv')
-val_csv = pd.read_csv('C:/Users/Karti/Desktop/drive/Multi_Label_dataset/val.csv')  # Replace with the path to your validation CSV
+train_csv = pd.read_csv('Multi_Label_dataset/train.csv')
+val_csv = pd.read_csv('Multi_Label_dataset/val.csv')  # Replace with the path to your validation CSV
 
 # Initialize datasets
 train_data = ImageDataset(train_csv)
@@ -57,7 +59,7 @@ torch.save({
     'model_state_dict': model.state_dict(),
     'optimizer_state_dict': optimizer.state_dict(),
     'loss': criterion,
-}, 'C:/Users/Karti/Desktop/drive/outputs/model.pth')
+}, 'outputs/model.pth')
 
 # Plot and save the train and validation line graphs for losses
 plt.figure(figsize=(10, 7))
@@ -66,5 +68,5 @@ plt.plot(val_loss, color='red', label='Validation Loss')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
-plt.savefig('C:/Users/Karti/Desktop/drive/outputs/loss.png')
+plt.savefig('outputs/loss.png')
 plt.show()

@@ -24,7 +24,7 @@ class ImageDataset(Dataset):
         return len(self.all_image_names)
     
     def __getitem__(self, index):
-        image = cv2.imread(f"C:/Users/Karti/Desktop/drive/Multi_Label_dataset/Images/{self.all_image_names[index]}.jpg")
+        image = cv2.imread(f"Multi_Label_dataset/Images/{self.all_image_names[index]}.jpg")
         # convert the image from BGR to RGB color format
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         # apply image transforms
